@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Jogos</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Click Jogos</h1>
+        
+        <div class="buttons-container">
+            <button class="example-button" onclick="abrirJogoNumeroSecreto()">
+                Jogo dos Números Secretos
+            </button>
+            <button class="example-button" onclick="abrirCalculoMedia()">
+                Cálculo de Média
+            </button>
+            <button class="example-button" onclick="abrirFormulario()">
+                Formulário Interativo
+            </button>
+        </div>
+
+        <!-- Área de conteúdo para Jogo do Número Secreto -->
+        <div id="numero-secreto" class="content-area">
+            <h2>🎯 Jogo do Número Secreto</h2>
+            <p>Tente adivinhar o número secreto entre 1 e 100!</p>
+            <input type="number" id="palpite" class="game-input" placeholder="Digite seu palpite" min="1" max="100">
+            <br>
+            <button class="game-button" onclick="verificarPalpite()">Verificar</button>
+            <button class="game-button" onclick="reiniciarJogo()">Novo Jogo</button>
+            <div id="resultado-jogo"></div>
+            <div id="tentativas-info" class="info">Tentativas: 0</div>
+        </div>
+
+        <!-- Área de conteúdo para Cálculo de Média -->
+        <div id="calculo-media" class="content-area">
+            <h2>📊 Calculadora de Média</h2>
+            <p>Digite as notas para calcular a média:</p>
+            <input type="number" id="nota1" class="game-input" placeholder="Nota 1" step="0.1">
+            <input type="number" id="nota2" class="game-input" placeholder="Nota 2" step="0.1">
+            <input type="number" id="nota3" class="game-input" placeholder="Nota 3" step="0.1">
+            <input type="number" id="nota4" class="game-input" placeholder="Nota 4" step="0.1">
+            <br>
+            <button class="game-button" onclick="calcularMedia()">Calcular Média</button>
+            <button class="game-button" onclick="limparNotas()">Limpar</button>
+            <div id="resultado-media"></div>
+        </div>
+
+        <!-- Área de conteúdo para Formulário -->
+        <div id="formulario" class="content-area">
+            <h2>📝 Formulário Interativo</h2>
+            <form id="meuFormulario">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="idade">Idade:</label>
+                    <input type="number" id="idade" name="idade" min="1" max="120" required>
+                </div>
+                <div class="form-group">
+                    <label for="curso">Curso:</label>
+                    <select id="curso" name="curso" required>
+                        <option value="">Selecione um curso</option>
+                        <option value="informatica">Informática</option>
+                        <option value="administracao">Administração</option>
+                        <option value="engenharia">Engenharia</option>
+                        <option value="medicina">Medicina</option>
+                    </select>
+                </div>
+                <button type="button" class="game-button" onclick="processarFormulario()">Enviar</button>
+                <button type="button" class="game-button" onclick="limparFormulario()">Limpar</button>
+            </form>
+            <div id="resultado-formulario"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    </body>
+</html>
