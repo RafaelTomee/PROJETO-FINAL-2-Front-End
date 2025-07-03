@@ -31,130 +31,102 @@
             });
         }
 
-        // Funções do Jogo do Número Secreto
-        function verificarPalpite() {
-            const palpite = parseInt(document.getElementById('palpite').value);
-            const resultadoDiv = document.getElementById('resultado-jogo');
-            const tentativasDiv = document.getElementById('tentativas-info');
-            
-            if (isNaN(palpite) || palpite < 1 || palpite > 100) {
-                resultadoDiv.innerHTML = '<div class="error">Por favor, digite um número entre 1 e 100!</div>';
-                return;
-            }
-            
-            tentativas++;
-            tentativasDiv.innerHTML = `<div class="info">Tentativas: ${tentativas}</div>`;
-            
-            if (palpite === numeroSecreto) {
-                resultadoDiv.innerHTML = `<div class="success">🎉 Parabéns! Você acertou o número ${numeroSecreto} em ${tentativas} tentativas!</div>`;
-                // Usando alert conforme solicitado
-                alert(`Parabéns! Você descobriu o número secreto ${numeroSecreto} em ${tentativas} tentativas!`);
-            } else if (palpite < numeroSecreto) {
-                resultadoDiv.innerHTML = '<div class="info">📈 O número secreto é MAIOR que ' + palpite + '!</div>';
-            } else {
-                resultadoDiv.innerHTML = '<div class="info">📉 O número secreto é MENOR que ' + palpite + '!</div>';
-            }
-            
-            document.getElementById('palpite').value = '';
-        }
+        // Jogo do Número Secreto
 
-        function reiniciarJogo() {
-            numeroSecreto = Math.floor(Math.random() * 100) + 1;
-            tentativas = 0;
-            document.getElementById('palpite').value = '';
-            document.getElementById('resultado-jogo').innerHTML = '';
-            document.getElementById('tentativas-info').innerHTML = '<div class="info">Tentativas: 0</div>';
-        }
 
-        // Funções do Cálculo de Média
-        function calcularMedia() {
-            const nota1 = parseFloat(document.getElementById('nota1').value) || 0;
-            const nota2 = parseFloat(document.getElementById('nota2').value) || 0;
-            const nota3 = parseFloat(document.getElementById('nota3').value) || 0;
-            const nota4 = parseFloat(document.getElementById('nota4').value) || 0;
-            
-            const media = (nota1 + nota2 + nota3 + nota4) / 4;
-            const resultadoDiv = document.getElementById('resultado-media');
-            
-            let situacao = '';
-            let classe = '';
-            
-            if (media >= 7) {
-                situacao = 'Aprovado! 🎉';
-                classe = 'success';
-            } else if (media >= 5) {
-                situacao = 'Recuperação 📚';
-                classe = 'info';
-            } else {
-                situacao = 'Reprovado 😞';
-                classe = 'error';
-            }
-            
-            resultadoDiv.innerHTML = `
-                <div class="${classe}">
-                    <strong>Média: ${media.toFixed(2)}</strong><br>
-                    Situação: ${situacao}
-                </div>
-            `;
-            
-            // Usando alert conforme a estrutura do jogo anterior
-            alert(`Média calculada: ${media.toFixed(2)}\nSituação: ${situacao}`);
-        }
+function abrirJogoNumeroSecreto() {
+    document.getElementById('numero-secreto').style.display = 'block';
+    document.getElementById('calculo-media').style.display = 'none';
+    document.getElementById('formulario').style.display = 'none';
+    numeroSecreto = Math.floor(Math.random() * 100) + 1;
+    tentativas = 0;
+    document.getElementById('resultado-jogo').innerHTML = '';
+    document.getElementById('tentativas-info').innerHTML = 'Tentativas: 0';
+}
 
-        function limparNotas() {
-            document.getElementById('nota1').value = '';
-            document.getElementById('nota2').value = '';
-            document.getElementById('nota3').value = '';
-            document.getElementById('nota4').value = '';
-            document.getElementById('resultado-media').innerHTML = '';
-        }
+function verificarPalpite() {
+    let palpite = parseInt(document.getElementById('palpite').value);
+    let resultado = document.getElementById('resultado-jogo');
 
-        // Funções do Formulário
-        function processarFormulario() {
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const idade = document.getElementById('idade').value;
-            const curso = document.getElementById('curso').value;
-            const resultadoDiv = document.getElementById('resultado-formulario');
-            
-            if (!nome || !email || !idade || !curso) {
-                resultadoDiv.innerHTML = '<div class="error">Por favor, preencha todos os campos!</div>';
-                return;
-            }
-            
-            const dadosProcessados = {
-                nome: nome,
-                email: email,
-                idade: parseInt(idade),
-                curso: curso
-            };
-            
-            resultadoDiv.innerHTML = `
-                <div class="success">
-                    <h3>Dados Processados com Sucesso!</h3>
-                    <p><strong>Nome:</strong> ${dadosProcessados.nome}</p>
-                    <p><strong>Email:</strong> ${dadosProcessados.email}</p>
-                    <p><strong>Idade:</strong> ${dadosProcessados.idade} anos</p>
-                    <p><strong>Curso:</strong> ${dadosProcessados.curso}</p>
-                </div>
-            `;
-            
-            alert(`Formulário enviado com sucesso!\nNome: ${nome}\nEmail: ${email}\nIdade: ${idade}\nCurso: ${curso}`);
-        }
+    if (palpite < 1 || palpite > 100 || isNaN(palpite)) {
+        resultado.innerHTML = 'Digite um número entre 1 e 100.';
+        return;
+    }
 
-        function limparFormulario() {
-            document.getElementById('meuFormulario').reset();
-            document.getElementById('resultado-formulario').innerHTML = '';
-        }
+    tentativas++;
 
-        // Event listeners para tecla Enter
-        document.getElementById('palpite').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verificarPalpite();
-            }
-        });
+    if (palpite === numeroSecreto) {
+        resultado.innerHTML = `Acertou! Era ${numeroSecreto}. Tentativas: ${tentativas}`;
+        alert(`Parabéns! Você acertou o número ${numeroSecreto} em ${tentativas} tentativas.`);
+    } else if (palpite < numeroSecreto) {
+        resultado.innerHTML = 'Tente um número maior!';
+    } else {
+        resultado.innerHTML = 'Tente um número menor!';
+    }
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Aplicação carregada com sucesso!');
-        });
+    document.getElementById('tentativas-info').innerHTML = 'Tentativas: ' + tentativas;
+    document.getElementById('palpite').value = '';
+}
+
+// Cálculo de Média
+function abrirCalculoMedia() {
+    document.getElementById('numero-secreto').style.display = 'none';
+    document.getElementById('calculo-media').style.display = 'block';
+    document.getElementById('formulario').style.display = 'none';
+    limparNotas();
+}
+
+function calcularMedia() {
+    let n1 = parseFloat(document.getElementById('nota1').value);
+    let n2 = parseFloat(document.getElementById('nota2').value);
+    let n3 = parseFloat(document.getElementById('nota3').value);
+    let n4 = parseFloat(document.getElementById('nota4').value);
+
+    let media = (n1 + n2 + n3 + n4) / 4;
+    let resultado = document.getElementById('resultado-media');
+    let situacao = '';
+
+    if (media >= 7) {
+        situacao = 'Aprovado';
+    } else if (media >= 5) {
+        situacao = 'Recuperação';
+    } else {
+        situacao = 'Reprovado';
+    }
+
+    resultado.innerHTML = `Média: ${media.toFixed(2)} - ${situacao}`;
+    alert(`Média: ${media.toFixed(2)}\nSituação: ${situacao}`);
+}
+
+function limparNotas() {
+    document.getElementById('nota1').value = '';
+    document.getElementById('nota2').value = '';
+    document.getElementById('nota3').value = '';
+    document.getElementById('nota4').value = '';
+    document.getElementById('resultado-media').innerHTML = '';
+}
+
+// Formulário
+function abrirFormulario() {
+    document.getElementById('numero-secreto').style.display = 'none';
+    document.getElementById('calculo-media').style.display = 'none';
+    document.getElementById('formulario').style.display = 'block';
+    document.getElementById('resultado-formulario').innerHTML = '';
+    document.getElementById('meuFormulario').reset();
+}
+
+function enviarFormulario() {
+    let nome = document.getElementById('nome').value;
+    let email = document.getElementById('email').value;
+    let idade = document.getElementById('idade').value;
+    let curso = document.getElementById('curso').value;
+    let resultado = document.getElementById('resultado-formulario');
+
+    if (!nome || !email || !idade || !curso) {
+        resultado.innerHTML = 'Preencha todos os campos.';
+        return;
+    }
+
+    resultado.innerHTML = `Nome: ${nome}<br>Email: ${email}<br>Idade: ${idade}<br>Curso: ${curso}`;
+    alert(`Formulário enviado!\nNome: ${nome}\nEmail: ${email}\nIdade: ${idade}\nCurso: ${curso}`);
+}
